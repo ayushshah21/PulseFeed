@@ -3,6 +3,7 @@
   line-height: 1.5;
   font-weight: 400;
 
+  
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
@@ -59,7 +60,7 @@ button:focus-visible {
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
-    background-color: #ffffff;
+    background-color: whitesmoke;
   }
   a:hover {
     color: #747bff;
@@ -77,11 +78,89 @@ button:focus-visible {
   position: absolute;
   top: 0;
 }
-
-.keyword-form{
+/* FormStyles.css */
+.keyword-form {
+  max-width: 650px; /* Increased width */
+  width: 20rem;
+  margin: 20px auto;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
-
+  justify-content: center;
 }
+
+.topic-label {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  color: #333;
+}
+
+.keyword-form input {
+  flex-grow: 1;
+  padding: 10px;
+  margin-left: 10px; /* Added margin for spacing */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.3s;
+}
+
+.keyword-form input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.keyword-form input::placeholder {
+  font-style: italic;
+}
+
+.topic-wrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.delete-button {
+  margin-left: 10px; /* Ensure some spacing between the input and the button */
+  background-color: #ff6347;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background-color: #d9534f;
+}
+
+.add-button {
+  background: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin: 0 5rem;
+}
+.save-button {
+  background: #05b767;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin: 1rem 5rem;
+}
+.save-button:hover {
+  background-color: #03864b;
+}
+
+.add-button:hover {
+  background-color: #0056b3;
+}
+

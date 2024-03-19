@@ -34,7 +34,7 @@ function App() {
           <h2>Welcome, {user.name.split(" ")[0]}!</h2>
         </div>
         <div className="form">
-          <Form/>
+          <Form user={user}/>
         </div>
         </div>
       ) : (
