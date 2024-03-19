@@ -10,15 +10,32 @@ from authlib.integrations.flask_client import OAuth
 from flask import jsonify
 import datetime
 import jwt
+from openai import OpenAI
 
 app = Flask(__name__)
+CORS(app)
 app.secret_key = secrets.token_hex(16)
 load_dotenv()
 oauth = OAuth(app)
 JWT_SECRET = "your_jwt_secret"
 JWT_ALGORITHM = "HS256"
 
-CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
+
+client = OpenAI(
+    # This is the default and can be omitted
+    api_key=os.environ.get("OPENAI_API_KEY"),
+)
+
+# response = client.chat.completions.create(
+    # messages=[
+    #     {
+    #         "role": "user",
+    #         "content": "Tell me more about joel embiid",
+    #     }
+    # ],
+    # model="gpt-3.5-turbo",
+    # )
+    # print(response)
 
 
 
@@ -37,7 +54,7 @@ def test_cors():
 oauth.register(
     name="google",
     jwks_uri="https://www.googleapis.com/oauth2/v3/certs",
-    client_id=os.getenv('CLIENT_ID'),
+    client_id=os.getenv("CLIENT_ID"),
     client_secret=os.getenv("CLIENT_SECRET"),
     access_token_url="https://accounts.google.com/o/oauth2/token",
     access_token_params=None,
@@ -58,6 +75,7 @@ def main():
     if not keywords:
         return "No Keywords provided", 400
     # email = dict(session).get("email", None)
+
     return results
 
 
