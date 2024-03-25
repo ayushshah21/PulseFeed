@@ -69,49 +69,8 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
-.welcome{
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-.welcome{
-  position: absolute;
-  top: 0;
-}
-/* FormStyles.css */
-.keyword-form {
-  max-width: 650px; /* Increased width */
-  width: 20rem;
-  margin: 20px auto;
-  padding: 20px;
-  background: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
 
-.topic-label {
-  display: flex;
-  align-items: center;
-  font-size: 16px;
-  color: #333;
-}
 
-.keyword-form input {
-  flex-grow: 1;
-  padding: 10px;
-  margin-left: 10px; /* Added margin for spacing */
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  transition: border-color 0.3s;
-}
-
-.keyword-form input:focus {
-  border-color: #007bff;
-  outline: none;
-}
 
 .keyword-form input::placeholder {
   font-style: italic;
@@ -121,19 +80,6 @@ button:focus-visible {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
-}
-
-.delete-button {
-  margin-left: 10px; /* Ensure some spacing between the input and the button */
-  background-color: #ff6347;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.delete-button:hover {
-  background-color: #d9534f;
 }
 
 .add-button {
@@ -164,3 +110,44 @@ button:focus-visible {
   background-color: #0056b3;
 }
 
+
+.app-container {
+  text-align: center;
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+}
+
+.authenticated-main {
+  margin-top: 20px;
+}
+
+.welcome-message h2 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.login-screen h1 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.login-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #4285F4; /* Google's brand color for "Sign in with Google" buttons */
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.login-button:hover {
+  background-color: #357ae8;
+}
+
+
+.add-button:hover, .save-button:hover {
+  transform: translateY(-2px); 
+  box-shadow: "0 6px 8px rgba(0,0,0,0.15)";
+}

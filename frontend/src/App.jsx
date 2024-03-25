@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
-import "./index.css";
+import "./index.css"; // Ensure your CSS file includes the new styles
 import Form from "./Form";
 
 function App() {
@@ -26,29 +26,23 @@ function App() {
   };
 
   return (
-    <>
+    <div className="app-container">
       {user ? (
-        <div className="main">
-        <div className="welcome">
-          {console.log(user)}
-          <h2>Welcome, {user.name.split(" ")[0]}!</h2>
-        </div>
-        <div className="form">
-          <Form user={user}/>
-        </div>
+        <div className="authenticated-main">
+          <div className="welcome-message">
+            <h2>Welcome, {user.name.split(" ")[0]}!</h2>
+          </div>
+          <Form user={user} />
         </div>
       ) : (
-        <div>
+        <div className="login-screen">
           <h1>Welcome to PulseFeed</h1>
-          <button
-            style={{ backgroundColor: "lightgreen" }}
-            onClick={handleLogin}
-          >
+          <button className="login-button" onClick={handleLogin}>
             Get Started With Google
           </button>
         </div>
       )}
-    </>
+    </div>
   );
 }
 
