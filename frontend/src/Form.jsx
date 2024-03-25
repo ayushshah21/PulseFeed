@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 
-const Form = ({user}) => {
+const Form = ({ user }) => {
   const [topics, setTopics] = useState([""]);
 
   const handleAddTopic = () => {
@@ -18,14 +18,28 @@ const Form = ({user}) => {
     newTopics[index] = value;
     setTopics(newTopics);
   };
-  const handleSaveTopic = (index, value) => {
-    const baseURL = "http://127.0.0.1:5000"
-    console.log(user.email);
-    // const newTopics = [...topics];
-    // newTopics[index] = value;
-    // setTopics(newTopics);
-  };
 
+  
+  const handleSaveTopics = async () => {
+    const baseURL = "http://127.0.0.1:5001"; // Make sure this URL is correct and points to your backend
+    const keywords = topics.join(", "); // Join all topics to form a single string separated by commas
+    console.log(user.email); // Logging user email for debugging, you might want to remove this in production
+
+    try {
+      const response = await fetch(`${baseURL}/?keywords=${encodeURIComponent(keywords)}`, {
+        method: "GET", // or 'POST' if your backend expects a POST request
+      });
+
+      if (response.ok) {
+        const data = await response.json(); // Assuming the response is JSON
+        console.log(data); // Log or handle the response data as needed
+      } else {
+        console.error("Response not OK:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   return (
     <form className="keyword-form">
@@ -53,7 +67,7 @@ const Form = ({user}) => {
       <button type="button" className="add-button" onClick={handleAddTopic}>
         Add Topic
       </button>
-      <button type="button" className="save-button" onClick={handleSaveTopic}>
+      <button type="button" className="save-button" onClick={handleSaveTopics}>
         Save
       </button>
 
