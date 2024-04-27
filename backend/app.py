@@ -16,6 +16,12 @@ from psycopg2.extras import RealDictCursor
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+import random
+from apscheduler.schedulers.background import BackgroundScheduler
+import os
+from supabase import create_client, Client
+
+
 
 app = Flask(__name__)
 CORS(app)
@@ -24,44 +30,17 @@ load_dotenv()
 oauth = OAuth(app)
 JWT_SECRET = "your_jwt_secret"
 JWT_ALGORITHM = "HS256"
+url: str = os.environ.get("SUPABASE_URL")
+key: str = os.environ.get("SUPABASE_KEY")
+supabase: Client = create_client(url, key)
 
 
-@app.route("/test_db_connection")
-def test_db_connection():
-    try:
-        # Attempt to connect to your database
-        conn = psycopg2.connect(os.environ.get("DATABASE_URL"))
 
-        # Create a cursor object
-        cur = conn.cursor()
-
-        # Execute a simple query (for example, getting the current version of PostgreSQL)
-        cur.execute("SELECT version();")
-
-        # Fetch the result
-        db_version = cur.fetchone()
-
-        # Close the cursor and connection
-        cur.close()
-        conn.close()
-
-        # Return the database version as a simple test
-        return jsonify({"db_version": db_version})
-    except Exception as e:
-        # If an error occurs, return the error message
-        return jsonify({"error": str(e)}), 500
 
 
 client = OpenAI(
-    # This is the default and can be omitted
     api_key=os.environ.get("OPENAI_API_KEY"),
 )
-
-
-@app.after_request
-def after_request(response):
-    app.logger.info(response.headers)
-    return response
 
 
 @app.route("/test-cors")
@@ -69,10 +48,6 @@ def test_cors():
     return "CORS should be enabled for this response."
 
 
-def get_db_connection():
-    return psycopg2.connect(
-        os.environ.get("DATABASE_URL"), cursor_factory=RealDictCursor
-    )
 
 
 # Google OAuth Config
@@ -91,14 +66,27 @@ oauth.register(
 
 
 def format_articles(articles):
-    email_body = "<h1>Top 10 Articles</h1>"
-    for article in articles[:10]:  # Limit to top 10 articles
+    email_body = "<h1>How's It Going Gym Boy 💪</h1>"
+    for article in articles[:10]:  # Currently I'm only sending top 10 articles
+        response = client.chat.completions.create(
+            messages=[
+                {
+                    "role": "user",
+                    "content": f"""Could you summarize this article: Make sure the summary is concise and 
+                appealing/easy to understand to its readers to make them want to read the rest of the 
+                article: 2 sentences max {article.link}""",
+                }
+            ],
+            model="gpt-3.5-turbo",
+        )
+        content = response.choices[0].message.content
+        print(response)
         email_body += f"""
             <div>
-                <h2>{article.title}</h2>  <!-- Adjusted here -->
-                <p>{article.description}</p>  <!-- And here -->
-                <p><a href="{article.link}">Read more</a></p>  <!-- And here -->
-                <p>Published on: {article.pubDate}</p>  <!-- Assuming 'pubDate' is the correct attribute -->
+                <h2 style="color:black;">{article.title}</h2> 
+                <p>{content}</p>  
+                <p><a href="{article.link}">Read more</a></p> 
+                <p>Published on: {article.pubDate}</p> 
                 <hr>
             </div>
         """
@@ -108,7 +96,7 @@ def format_articles(articles):
 def send_email(recipient, email_body):
     smtp_server = "smtp.gmail.com"
     smtp_port = 587
-    smtp_user = "aashah2003@gmail.com"
+    smtp_user = "pulsefeed23@gmail.com"
     smtp_password = os.environ.get(
         "GMAIL_PASSWORD"
     )  # Consider using environment variables or a secure method to store this
@@ -131,30 +119,39 @@ def send_email(recipient, email_body):
 
 @app.route("/", methods=["GET", "POST"])
 def main():
-    keywords = request.args.get("keywords")
-    print(keywords)
-    # print("Hello World")
-    gnf = GoogleNewsFeed(language="en", country="US")
-    # print(results)
-    response = client.chat.completions.create(
-        messages=[
-            {
-                "role": "user",
-                "content": f"can you turn the following phrase into keywords, which i can use to input into the google news rss feed to search for articles effectively: {keywords}",
-            }
-        ],
-        model="gpt-3.5-turbo",
-    )
-    print(response)
-    results = gnf.query(keywords)
-
-    if not keywords:
+    keywords_string = request.args.get("keywords")
+    if not keywords_string:
         return "No Keywords provided", 400
+    # Split the keywords string into a list
+    keywords_list = [keyword.strip() for keyword in keywords_string.split(",")]
+    print(keywords_string)
+    # print("Hello World")
+    all_articles = []
+    gnf = GoogleNewsFeed(language="en", country="US")
+    for keyword in keywords_list:
+        # Query the Google RSS feed for each keyword
+        print(f"Querying for keyword: {keyword}")
+        articles = gnf.query(keyword)
 
-    email_body = format_articles(results)
-    send_email(
-        "aashah2003@gmail.com", email_body
-    )  # Replace with actual recipient email address
+        # Get the top 3-5 articles for each keyword (adjust the range as needed)
+        top_articles = articles[:4]
+        all_articles.extend(top_articles)
+    # print(results)
+    # response = client.chat.completions.create(
+    #     messages=[
+    #         {
+    #             "role": "user",
+    #             "content": f"can you turn the following phrase into keywords, which i can use to input into the google news rss feed to search for articles effectively: {keywords}",
+    #         }
+    #     ],
+    #     model="gpt-3.5-turbo",
+    # )
+    # print(response)
+    # results = gnf.query(keywords)
+
+    random.shuffle(all_articles)
+    email_body = format_articles(all_articles)
+    send_email("aashah2003@gmail.com", email_body)
 
     return "Email sent successfully!"
 

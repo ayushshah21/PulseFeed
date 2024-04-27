@@ -1,9 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Style+Script&display=swap');
+@import url(https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap);.content-wrapper[data-v-f926e7dc]{position:fixed;top:20px;right:0}.content-wrapper .button[data-v-f926e7dc]{height:100px}p[data-v-f926e7dc]{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji"}
+
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
@@ -14,14 +18,6 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
 
 body {
   margin: 0;
@@ -29,14 +25,140 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  justify-content: center;
-  align-items: center;
 }
 
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
+
+
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+.landing-page {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  height: 100vh;
+}
+
+.left-landing {
+  width: 30rem;
+  margin-right: 20px;
+  align-self: center;
+  transform: translateY(-7rem);
+  text-align: left;
+}
+
+.right-landing {
+  width: 30rem;
+  margin-left: 20px;
+  align-self: center;
+  transform: translateY(-6rem);
+  border-radius: 1rem;
+}
+.title-text{
+  color: rgb(0, 0, 0);
+  font-size: 1.75rem;
+  line-height: normal;
+  transform: translateY(-2rem);
+  margin-top: 2rem;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+.all-nba-title {
+  color: #0866ff;          
+  font-weight: 750;       
+  font-family: 'Montserrat', sans-serif; 
+}
+
+
+/* LoginForm.css */
+.login-form-container {
+  width: 22.5rem; 
+  margin: auto;
+  margin-top: 50px;
+  padding: 1.5rem;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+
+.login-form .input-group {
+  margin-bottom: 20px;
+}
+
+.login-form .input-group input {
+  width: calc(100% - 20px);
+  padding: 20px 10px;
+  font-size: 18px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.login-form .login-btn {
+  width: calc(100% - 20px);
+  padding: 15px 5px;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  background-color: #096bec;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-weight: bold; /* Make the button text bolder */
+}
+
+.login-form .forgot-password {
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+  font-size: 16px;
+  color: #1877F2;
+  text-decoration: none;
+}
+
+.login-form .forgot-password::after {
+  content: '';
+  display: block;
+  margin-top: 8px; /* Space above the line */
+  margin-bottom: 20px; /* Space below the line to separate from the next button */
+  width: 100%; /* Line spans the full width of the form */
+  border-bottom: 1px solid #ddd; /* Gray horizontal line */
+}
+
+
+.login-form .create-account-btn {
+  width: calc(60% - 10px); /* Half the width of the login button minus padding */
+  padding: 15px 5px;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  background-color: #42B72A;
+  color: #fff;
+  cursor: pointer;
+  margin-top: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-weight: bold; /* Make the button text bolder */
+  text-align: center;
+  display: block; /* Necessary to center the button */
+  margin-left: auto; /* Along with margin-right auto, centers the button */
+  margin-right: auto;
+}
+
 
 button {
   border-radius: 8px;
